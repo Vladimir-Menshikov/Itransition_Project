@@ -1,0 +1,7 @@
+__pycache__
+obj
+.env
+db.sqlite3
+Project.pyproj
+Project.pyproj.user
+staticfiles

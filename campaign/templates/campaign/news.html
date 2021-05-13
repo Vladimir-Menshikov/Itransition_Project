@@ -1,0 +1,18 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+    <h1>{{ news.title }}</h1>
+    {% if news.image.url != null %}
+        <img src="{{ news.image.url }}" class="img-responsive" alt="Image">
+    {% endif %}
+    <div>
+        {{ news.text_rendered | safe }}
+    </div>
+    {% if news.project.user.id == user.id %}
+        <form action="." method="post" class="form-horizontal">
+            {% csrf_token %}
+            <a href="{% url 'edit_news' id=news.id %}" class="btn btn-default">Edit</a>
+            <button type="submit" name="delete_news" class="btn btn-danger">Delete</button>
+        </form>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,11 @@
+django
+gunicorn
+django-heroku
+django-environ
+social-auth-app-django
+django-markdownfield
+sentry-sdk
+django-taggit
+cloudinary
+django-mathfilters
+django-environ

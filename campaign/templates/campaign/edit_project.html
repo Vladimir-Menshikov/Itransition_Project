@@ -1,0 +1,115 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+    <h2>{{ title }}</h2>
+    <div class="row">
+        <div class="col-sm-9">
+            <section id="projectEditForm">
+                <form action="." method="post" class="form-horizontal">
+                    {% csrf_token %}
+                    <h4>Edit your project</h4>
+                    <hr/>
+                    <div class="form-group">
+                        <label for="id_category" class="col-md-2 control-label">Category</label>
+                        <div class="col-md-10">
+                            {{ form.category }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_name" class="col-md-2 control-label">Project name</label>
+                        <div class="col-md-10">
+                            {{ form.name }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_tags" class="col-md-2 control-label">Tags</label>
+                        <div class="col-md-10">
+                            {{ form.tags }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label for="id_description" class="control-label">Short description</label>
+                        </div>
+                        <div class="col-md-10">
+                            {{ form.description}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_video" class="col-md-2 control-label">YT video URL</label>
+                        <div class="col-md-10">
+                            {{ form.video}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_goal" class="col-md-2 control-label">Project goal (US$)</label>
+                        <div class="col-md-10">
+                            {{ form.goal}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_expiration_date" class="col-md-2 control-label">Project expiration date</label>
+                        <div class="col-md-10">
+                            {{ form.expiration_date}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="hidden" name="next" value="/" />
+                            <input type="submit" value="Save" class="btn btn-success" />
+                        </div>
+                    </div>
+                    {% if form.errors %}
+                        <p class="validation-summary-errors">Please enter correct data.</p>
+                    {% endif %}
+                </form>
+            </section>
+        </div>
+        <div class="col-sm-3">
+            <section>
+                <h4>Images</h4>
+                <form action="{% url 'delete_project_image' %}" method="post" class="form-horizontal">
+                    {% csrf_token %}
+                    {% for image in project.images.all %}
+                        <div class="img-wrap">
+                            <img src = "{{ image.image.url }}" class="img-responsive" style="margin-bottom:10px"/>
+                            <input type="hidden" name="project" value="{{ project.id }}" />
+                            <button type="submit" name="delete_image" value="{{ image.id }}" class="btn delete">
+                                X
+                            </button>
+                        </div>
+                    {% endfor %}
+                </form>
+                <a class="btn btn-success" href="{% url 'add_project_image' slug=project.slug id=project.id %}">Add Image</a>
+            </section>
+            <hr />
+            <section>
+                <h4>Rewards</h4>
+                <form action="{% url 'delete_reward' %}" method="post" class="form-horizontal">
+                    {% csrf_token %}
+                    {% for reward in project.rewards.all %}
+                        <div class="row" style="margin-bottom: 10px">
+                            <div class="col-xs-10">
+                                <a href="{% url 'edit_reward' id=reward.id %}">{{ reward.name }}</a>
+                            </div>
+                            <div class="col-xs-2">
+                                <input type="hidden" name="project" value="{{ project.id }}" />
+                                <button class="btn btn-default" type="submit" name="delete_reward" value="{{ reward.id }}">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </form>
+                
+                <a class="btn btn-success" href="{% url 'add_reward' slug=project.slug id=project.id %}">Add Reward</a>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        var easyMDE = new EasyMDE();
+    </script>
+{% endblock %}

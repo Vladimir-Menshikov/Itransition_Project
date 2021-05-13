@@ -1,0 +1,19 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+    <h2>{{ title }}</h2>
+    {% for reward in user.rewards.all %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ reward.name }}</h3>
+            </div>
+            <div class="panel-body">
+                <p>{{ reward.description }}</p>
+            </div>
+        </div>
+    {% empty %}
+        <h3>You don't have any rewards yet. Back a project to get a reward.</h3>
+    {% endfor %}
+{% endblock %}
+
+

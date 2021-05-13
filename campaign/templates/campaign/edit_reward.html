@@ -1,0 +1,39 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+    <h2>{{ title }}</h2>
+    <section id="rewardEditForm">
+        <form action="." method="post" class="form-horizontal">
+            {% csrf_token %}
+            <h4>You can edit reward using the following form:</h4>
+            <hr/>
+            <div class="form-group">
+                <label for="id_name" class="col-md-2 control-label">Reward name</label>
+                <div class="col-md-10">
+                    {{ form.name }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id_description" class="col-md-2 control-label">Reward description</label>
+                <div class="col-md-10">
+                    {{ form.description}}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id_sum" class="col-md-2 control-label">Sum (US$)</label>
+                <div class="col-md-10">
+                    {{ form.sum}}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="hidden" name="next" value="/" />
+                    <input type="submit" value="Save" class="btn btn-success" />
+                </div>
+            </div>
+            {% if form.errors %}
+                <p class="validation-summary-errors">Please enter correct data.</p>
+            {% endif %}
+        </form>
+    </section>
+{% endblock %}

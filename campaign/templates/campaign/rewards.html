@@ -1,0 +1,31 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+    <form action="." method="post" class="form-horizontal">
+        {% csrf_token %}
+        {% for reward in project.rewards.all %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ reward.name }}</h3>
+                </div>
+                <div class="panel-body">
+                    <p>{{ reward.description }}</p>
+                    <button type="submit" name="reward" value="{{ reward.id }}"
+                            class="btn btn-success col-sm-offset-9 col-sm-3">
+                        Pledge ${{reward.sum}}
+                    </button>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Pledge without a reward</h3>
+            </div>
+            <div class="panel-body">
+                <input type="number" name="sum" placeholder="Sum ($)" step=".01" min="0"
+                       class="form-control" style="margin-bottom:10px">
+                <button type="submit" class="btn btn-success col-sm-offset-9 col-sm-3">Pledge</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,48 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+    <h2>{{ title }}</h2>
+    <section id="registrationForm">
+        <form action="." method="post" class="form-horizontal">
+            {% csrf_token %}
+            <h4>Please, sign up using the following form:</h4>
+            <hr/>
+            <div class="form-group">
+                <label for="id_username" class="col-md-2 control-label">User name</label>
+                <div class="col-md-10">
+                    {{ form.username }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id_first_name" class="col-md-2 control-label">First name</label>
+                <div class="col-md-10">
+                    {{ form.first_name }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id_email" class="col-md-2 control-label">Email address</label>
+                <div class="col-md-10">
+                    {{ form.email }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id_password" class="col-md-2 control-label">Password</label>
+                <div class="col-md-10">
+                    {{ form.password }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id_password2" class="col-md-2 control-label">Repeat Password</label>
+                <div class="col-md-10">
+                    {{ form.password2 }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="hidden" name="next" value="/" />
+                    <input type="submit" value="Create my account" class="btn btn-success" />
+                </div>
+            </div>
+        </form>
+    </section>
+{% endblock %}

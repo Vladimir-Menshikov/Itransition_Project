@@ -1,0 +1,30 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+    <h2>{{ title }}</h2>
+    <form action="." method="post" class="form-horizontal">
+        {% csrf_token %}
+        {% for project in user.projects.all %}
+            <div class="row">
+                <div class="col-xs-7 col-sm-8 col-md-9 col-lg-10">
+                    <a href="{{ project.get_absolute_url }}">
+                        <h4>{{project.name}}</h4>
+                    </a>
+                </div>
+                <div class="col-xs-5 col-sm-4 col-md-3 col-lg-2">
+                    <a href="{% url 'edit_project' slug=project.slug id=project.id %}" class="btn">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <button type="submit" name="delete_project" value="{{ project.id }}" class="btn">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </div>
+        {% empty %}
+            <h3>You don't have any projects.</h3>
+        {% endfor %}
+    </form>
+    <a class="btn btn-success" href="{% url 'add_project' %}">Add project</a>
+{% endblock %}
+
+

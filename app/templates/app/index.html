@@ -1,0 +1,13 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+    <div class="row" style="margin-top:20px">
+        {% for project in projects %}
+            <div class="panel panel-default">
+                <div class="panel-body" >
+                    <h3><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h3>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
