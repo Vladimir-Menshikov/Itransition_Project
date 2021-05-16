@@ -9,6 +9,8 @@ from app import views
 
 urlpatterns = [
     path('tag/<slug:tag_slug>/', views.home, name='projects_by_tag'),
+    path('category/<slug:category_slug>/', views.home, name='projects_by_category'),
+    path('search/', views.home, name='search'),
     path('', views.home, name='home'),
     path('admin/', admin.site.urls),
     path('account/', include('account.urls')),

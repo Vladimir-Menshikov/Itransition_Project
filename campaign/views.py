@@ -139,6 +139,7 @@ def delete_reward(request):
 @login_required
 def rewards(request, slug, id):
     project = get_object_or_404(Project, slug=slug, id=id)
+    rewards = project.rewards.order_by('sum')
     if request.method == 'POST':
         if 'reward' in request.POST:
             reward_id=request.POST.get('reward')
@@ -157,7 +158,7 @@ def rewards(request, slug, id):
     return render(request,
                       'campaign/rewards.html',
                       {'title': 'Rewards',
-                       'project': project})
+                       'rewards': rewards})
 
 
 @login_required

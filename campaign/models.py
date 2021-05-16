@@ -8,6 +8,8 @@ from django.template.defaultfilters import slugify
 from taggit.managers import TaggableManager
 from cloudinary.models import CloudinaryField
 from datetime import date
+from django.db.models import Count
+from taggit.models import Tag
 
 class Category(models.Model):
     name = models.CharField(max_length=200,
@@ -23,9 +25,9 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-    #def get_absolute_url(self):
-    #    return reverse('shop:product_list_by_category',
-    #                   args=[self.slug])
+    def get_absolute_url(self):
+        return reverse('projects_by_category',
+                       args=[self.slug])
 
 class Project(models.Model):
     category = models.ForeignKey(Category,
@@ -64,6 +66,12 @@ class Project(models.Model):
         self.slug = slugify(self.name)
         self.video = self.video.replace('youtu.be', 'www.youtube.com/embed').replace('watch?v=', 'embed/')
         super(Project, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        super(Project, self).delete(*args, **kwargs)
+        Tag.objects.annotate(
+                ntag=Count('taggit_taggeditem_items')
+            ).filter(ntag=0).delete()
 
     def days_left(self):
         return (self.expiration_date - date.today()).days

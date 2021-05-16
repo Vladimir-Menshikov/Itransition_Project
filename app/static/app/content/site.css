@@ -104,3 +104,14 @@ input[type="checkbox"].input-validation-error {
     border: 1px solid #ccc;
     border-top: none;
 }
+
+.scroll {
+    white-space: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.scroll li {
+    display: inline-block;
+    float: none;
+}

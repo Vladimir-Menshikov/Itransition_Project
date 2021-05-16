@@ -9,15 +9,10 @@ class CategoryAdmin(admin.ModelAdmin):
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ['name', 'category', 'user', 'goal', 'collected_sum',
                   'expiration_date', 'backers', 'rate', 'created', 'updated']
-    list_filter = ['category', 'user', 'goal', 'collected_sum',
+    list_filter = ['name', 'category', 'user', 'goal', 'collected_sum',
                   'expiration_date', 'backers', 'rate', 'created', 'updated']
-    fields = ('category', 'name', 'tags', 'description',
+    fields = ('user', 'category', 'name', 'tags', 'description',
              'video', 'goal', 'expiration_date')
-
-    def save_model(self, request, obj, form, change):
-        if getattr(obj, 'user', None) is None:
-            obj.user = request.user
-        obj.save()
 
 @admin.register(Reward)
 class RewardAdmin(admin.ModelAdmin):

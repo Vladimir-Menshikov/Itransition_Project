@@ -1,13 +1,45 @@
 {% extends "app/layout.html" %}
 
+{% block nav %}
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <ul class="scroll nav navbar-nav">
+                {% for c in categories %}
+                    <li {% if category.slug == c.slug %}class="active"{% endif %}>
+                        <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </nav>
+{% endblock %}
+
 {% block content %}
-    <div class="row" style="margin-top:20px">
-        {% for project in projects %}
-            <div class="panel panel-default">
-                <div class="panel-body" >
-                    <h3><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h3>
-                </div>
+    <div class="row">
+        <form id="orderByForm" method="get" action="." class="pull-right">
+            <div class="form-group">
+                <label for="id_order_by" class="control-label">Order by</label>
+                {{ order_by_form.order_by }}
             </div>
-        {% endfor %}
+        </form>
+    </div>
+    <div class="row" style="margin-top:20px">
+        <div class="col-sm-2" style="margin-bottom:20px">
+            {% for tag in tags %}
+                <a href="{% url "projects_by_tag" tag.slug %}">{{tag.name}}</a>
+                {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </div>
+        <div class="col-sm-10">
+            {% for project in projects %}
+                <div class="panel panel-default">
+                    <div class="panel-body" >
+                        <h3><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h3>
+                    </div>
+                </div>
+            {% empty %}
+                <p>There are no such projects.</p>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
