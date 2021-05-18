@@ -143,6 +143,7 @@ STATICFILES_DIRS = (
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+LOGIN_REDIRECT_URL = 'my_profile'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
